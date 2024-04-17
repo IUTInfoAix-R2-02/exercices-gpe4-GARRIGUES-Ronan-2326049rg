@@ -8,10 +8,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class JeuMain extends Application {
 
     private Scene scene;
     private BorderPane root;
+
+    private long chrono = System.currentTimeMillis();
+
+    private static ArrayList<Obstacle> lesObstacles = new ArrayList<Obstacle>();
+
+    public static ArrayList<Obstacle> getObstacles(){
+        return lesObstacles;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -22,7 +32,8 @@ public class JeuMain extends Application {
         Personnage pacman = new Pacman();
         Personnage fantome = new Fantome();
         // on positionne le fantôme 20 positions vers la droite
-        fantome.setLayoutX(20 * 10);
+        fantome.setLayoutX(62* 10);
+        fantome.setLayoutY(46* 10);
         //panneau du jeu
         Pane jeu = new Pane();
         jeu.setPrefSize(640, 480);
@@ -30,7 +41,8 @@ public class JeuMain extends Application {
         jeu.getChildren().add(fantome);
         root.setCenter(jeu);
         // Construction obstacle
-        Obstacle mur = new Obstacle(290,100,60,220);
+        Obstacle mur = new Obstacle(280,100,60,220);
+        lesObstacles.add(mur);
         mur.setFill(Paint.valueOf("#4ab4bc"));
         jeu.getChildren().add(mur);
 
@@ -39,7 +51,6 @@ public class JeuMain extends Application {
 
         //Gestion du déplacement du personnage
         deplacer(pacman, fantome);
-
         primaryStage.setTitle("... Pac Man ...");
 
         primaryStage.setScene(scene);
@@ -66,7 +77,7 @@ public class JeuMain extends Application {
                     j1.deplacerEnHaut();
                     break;
                 case DOWN:
-                    j1.deplacerEnBas(scene.getWidth());
+                    j1.deplacerEnBas(scene.getHeight());
                     break;
                 case Q:
                     j2.deplacerAGauche();
@@ -78,12 +89,19 @@ public class JeuMain extends Application {
                     j2.deplacerEnHaut();
                     break;
                 case S:
-                    j2.deplacerEnBas(scene.getWidth());
+                    j2.deplacerEnBas(scene.getHeight());
                     break;
 
             }
+
+            if (System.currentTimeMillis() - chrono>= 20000){
+                System.out.println("Victoire Fantôme");
+                System.exit(0);
+            }
+
+
             if (j1.estEnCollision(j2)){
-                System.out.println("Collision....");
+                System.out.println("Victoire de Pacman");
                 System.exit(0);
             }
         });
