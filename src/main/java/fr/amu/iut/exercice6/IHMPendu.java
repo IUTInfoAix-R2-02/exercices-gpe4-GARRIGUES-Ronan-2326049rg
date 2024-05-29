@@ -35,8 +35,8 @@ public class IHMPendu extends Application {
         }
         else{
             String nouveauMot;
-            for (int i = 0; i < this.mot.length(); ++i){
-                 for (int j = 0; j < pos.size(); ++j){
+            for (int i = 0; i < pos.size(); ++i){
+                 for (int j = 0; j < pos.get(i); ++j){
                      
                  }
             }
