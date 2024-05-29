@@ -27,12 +27,25 @@ public class Animation extends Application {
         transition1.setByX(150);
         transition1.setByY(-150);
 
-        transition1.setAutoReverse(true);
-        transition1.setCycleCount(2);
+        transition2.setByX(-300);
+        transition2.setByY(0);
+
+        transition3.setByX(0);
+        transition3.setByY(300);
+
+        transition4.setByX(300);
+        transition4.setByY(0);
+
+        transition5.setByX(-150);
+        transition5.setByY(-150);
+
+
 
         SequentialTransition st = new SequentialTransition(transition1, transition2, transition3, transition4, transition5);
+        st.setAutoReverse(true);
+        st.setCycleCount(2);
 
-        customButton.setOnMousePressed(mouseEvent -> transition1.play());
+        customButton.setOnMousePressed(mouseEvent -> st.play());
 
         primaryStage.setTitle("Animation");
         primaryStage.setScene(scene);
